@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Template 01 - Salvar Categoria</title>
+		
+		<!-- Bootstrap and core CSS -->
+    	<link th:href="@{../../../bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{../../../css/site.css}" rel="stylesheet">
+	</head>
+	<body>
+		<!-- Navigation -->
+		<nav th:replace="fragments/header :: header"></nav>
+		
+		<!-- Content -->
+		<div class="content-page container">
+			<section>
+				<center><h1 class="ProductDescription">Salvar Categoria</h1></center>
+				
+				<!-- MENSAGEM DE SUCESSO -->
+				<div th:if="${message != null}" class="alert alert-success alert-dismissible" role="alert">				
+					<span th:text="${message}"></span>
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+				
+				<div class="col-md-12 center">
+					<form th:action="${categoria.ctCodigo == null} ? @{/category/admin/insert} : @{/category/admin/update}" th:object="${categoria}"
+						 method="post" enctype="multipart/form-data" class="form-horizontal ProductDescription">
+						
+						<!-- MENSAGENS DE VALIDAÇÕES -->
+						<div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger alert-dismissible" role="alert">				
+							<div th:each="error : ${#fields.detailedErrors()}">
+								<span th:text="${error.message}"></span>
+							</div>
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+						</div>
+						
+						<!-- Category Id -->
+						<input type="hidden" th:field="*{ctCodigo}"/> 
+						
+						<!-- Category Description -->
+						<div class="form-group">
+							<label for="ctDescricao" class="col-md-4 control-label">Descrição:</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control" th:field="*{ctDescricao}" id="ctDescricao"/>
+							</div>
+						</div>
+						
+						<!-- Category Status -->
+						<div class="form-group" th:if="${categoria.ctCodigo != null}">
+							<label for="ctStatus" class="col-md-4 control-label">Status:</label>
+							<div class="col-md-2">
+								<select class="form-control" name="ctStatus" id="ctStatus">
+									<option value="" selected="selected">Selecione</option>
+									<option value="0" th:selected="${categoria.ctCodigo != null && categoria.ctStatus == 0}">Inativo</option>
+									<option value="1" th:selected="${categoria.ctStatus == 1}">Ativo</option>
+								</select>
+							</div>
+						</div>
+						
+						<!-- Product Actions -->
+						<div class="form-group">
+							<div class="col-md-12">
+								<button type="submit" class="btn btn-default">Salvar</button>
+								<input type="reset" class="btn btn-default" value="Limpar"/>
+								<a th:href="@{/category/admin/}" class="btn btn-default">Cancelar</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</section>
+		</div>
+		
+		<!-- Footer -->
+		<footer class="footer" th:replace="fragments/footer :: footer"></footer>
+		
+		<!-- Bootstrap core JavaScript -->
+    	<script th:src="@{../../../jquery/jquery-3.3.1.min.js}"></script>
+		<script th:src="@{../../../bootstrap/js/bootstrap.min.js}"></script>
+	</body>
+</html>

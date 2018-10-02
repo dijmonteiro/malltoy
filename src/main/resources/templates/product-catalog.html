@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Template 01 - Catalog</title>
+		
+		<!-- Bootstrap and core CSS -->
+    	<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+		<link th:href="@{/css/site.css}" rel="stylesheet" />
+		<link th:href="@{/css/product-image.css}" rel="stylesheet" />
+	</head>
+	<body>
+		<!-- Navigation -->
+		<nav th:replace="fragments/header :: header"></nav>
+		
+		<!-- Content -->
+		<div class="content-page container">
+			<section>
+				<p>
+					<span>Catálogo de Brinquedos</span>
+					<span>&gt;</span>
+					<span><a class="btn btn-link" th:href="@{'/category/'+${categoria.ctCodigo}}" th:text="${categoria.ctDescricao}"></a></span>
+					<span>&gt;</span>
+				</p>
+				<center><h1 class="ProductDescription" th:text="${categoria.ctDescricao}"></h1></center>
+				<div class="row center">
+					<div class="col-sm-6 col-md-4" th:each="pr : ${listaProduto}">
+						<article class="polaroid">
+							<div class="container-img">
+								<div id="SlideProducts" class="carousel slide" data-ride="carousel">
+									<!-- Indicators -->
+									<ol class="carousel-indicators">
+										<li data-target="#SlideProducts" th:each="im,imI : ${pr.images}" th:attr="data-slide-to=${imI.index}"></li>
+									</ol>
+									
+									<!-- Wrapper for slides -->
+									<div class="carousel-inner">
+				
+										<div class="item main-slider-item" th:each="img,imgI : ${pr.images}" th:classappend="${imgI.index == 0} ? active">
+											<a th:href="@{'/product/' + ${pr.prCodigo}}"><img th:src="@{${#strings.replace(img.imHref,'\','/')}}" th:title="${img.imTitle}"/></a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="container-text">
+								<div class="text">
+									<h2 th:text="${pr.prNome}"></h2>
+									<p  th:text="${'R$: ' + pr.prValor}"></p>
+									<a th:href="@{'/product/' + ${pr.prCodigo}}" class="btn btn-primary">Saiba Mais</a>
+								</div>
+							</div>
+						</article>
+					</div>
+				</div>
+
+			</section>
+		</div>
+		
+		<!-- Footer -->
+		<footer class="footer" th:replace="fragments/footer :: footer"></footer>
+		
+		<!-- Bootstrap core JavaScript -->
+    	<script th:src="@{/jquery/jquery-3.3.1.min.js}"></script>
+		<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	</body>
+</html>

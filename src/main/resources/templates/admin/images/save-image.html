@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Template 01 - Salvar Imagem</title>
+		
+		<!-- Bootstrap and core CSS -->
+    	<link th:href="@{../../../bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{../../../css/site.css}" rel="stylesheet">
+	</head>
+	<body>
+		<!-- Navigation -->
+		<nav th:replace="fragments/header :: header"></nav>
+		
+		<!-- Content -->
+		<div class="content-page container">
+			<section>
+				<center><h1 class="ProductDescription">Salvar Imagem</h1></center>
+				
+				<!-- MENSAGEM DE SUCESSO -->
+				<div th:if="${message != null}" class="alert alert-success alert-dismissible" role="alert">				
+					<span th:text="${message}"></span>
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+				
+				<div class="col-md-12 center">
+					<form th:action="${imagem.imCodigo == null} ? @{/images/admin/insert} : @{/images/admin/update}" th:object="${imagem}" 
+							method="post" enctype="multipart/form-data" class="form-horizontal ProductDescription">
+						
+						<!-- Image Id -->
+						<input type="hidden" th:field="*{imCodigo}" />
+						
+						<!-- Image Href -->
+                        <input type="hidden" th:field="${imagem.imHref}" />
+						
+						<!-- Image Title -->
+						<div class="form-group">
+							<label for="imTitle" class="col-md-4 control-label">Título:</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control" th:field="*{imTitle}" id="imTitle"/>
+							</div>
+						</div>
+						
+						<!-- Old Image -->
+						<div class="form-group" th:if="${imagem.imCodigo != null} ">
+							<label for="imImg" class="col-md-4 control-label">Imagem Antiga:</label>
+							<div class="col-md-4">
+								<img th:src="*{imHref}" title="*{i.imTitle}" width="150" height="150" id="imImg"/>
+							</div>
+						</div>
+						
+						<!-- New Image -->
+						<div class="form-group">
+							<label for="file" class="col-md-4 control-label">Foto:</label>
+							<div class="col-md-4">
+								<input type="file" name="file" accept="image/*" id="file" class="form-control" />
+							</div>
+						</div>
+						
+						<!-- Image Product -->
+						<div class="form-group">
+							<label for="imPrCodigo" class="col-md-4 control-label">Produto:</label>
+							<div class="col-md-2">
+								<select class="form-control" th:field="*{produto}" id="imPrCodigo">
+									<option value="" selected="selected">Selecione</option>
+									<option th:each="pr : ${listaProduto}" th:value="${pr.prCodigo}" th:text="${pr.prNome}"></option>
+								</select>
+							</div>
+						</div>
+						
+						<!-- Image Status -->
+						<div class="form-group" th:if="${imagem.imCodigo != null} ">
+							<label for="imStatus" class="col-md-4 control-label">Status:</label>
+							<div class="col-md-2">
+								<select class="form-control" name="imStatus" id="imStatus">
+									<option value="" selected="selected">Selecione</option>
+									<option value="0" th:selected="${imagem.imCodigo != null && imagem.imStatus == 0}">Inativo</option>
+									<option value="1" th:selected="${imagem.imStatus == 1}">Ativo</option>
+								</select>
+							</div>
+						</div>
+						
+						<!-- Product Actions -->
+						<div class="form-group">
+							<div class="col-md-12">
+								<button type="submit" class="btn btn-default">Salvar</button>
+								<input type="reset" class="btn btn-default" value="Limpar"/>
+								<a th:href="@{/images/admin/}" class="btn btn-default">Cancelar</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</section>
+		</div>
+		
+		<!-- Footer -->
+		<footer class="footer" th:replace="fragments/footer :: footer"></footer>
+		
+		<!-- Bootstrap core JavaScript -->
+    	<script th:src="@{../../../jquery/jquery-3.3.1.min.js}"></script>
+		<script th:src="@{../../../bootstrap/js/bootstrap.min.js}"></script>
+	</body>
+</html>

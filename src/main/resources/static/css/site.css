@@ -1,0 +1,65 @@
+@charset "utf-8";
+/* CSS Document */
+
+.navbar-inverse .navbar-nav>li>a{
+	color: #000000;
+}
+
+.navbar-inverse .navbar-brand {
+	color: #000000;
+}
+
+html {
+	height: 100%;
+	box-sizing: border-box;
+}
+
+body {
+	position: relative;
+	margin: 0;
+	padding-bottom: 6rem;
+	min-height: 100%;
+}
+
+#main-navigation{
+	background-color: #c5ba24;
+}
+
+main-content{
+	background-color: rgba(210,210,210,1);
+}
+
+.content-page {
+	margin: 0 auto;
+	padding-top: 64px;
+	  background-color: rgba(211,210,210,1.00);
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.footer {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	padding: 1rem;
+	background-color: #c5ba24;
+	text-align: center;
+}
+
+@media only screen and (min-width: 768px) {
+	.main-slider-item{
+		height: 400px;
+		background-color: rgba(31,31,31,0.88);
+		overflow: hidden;
+	}
+}
+.main-slider-item{
+	max-height: 400px;
+	background-color: rgba(31,31,31,0.88);
+	overflow: hidden;
+}
+
+.main-slider-item img{
+	margin: 0 auto;
+	display: block;
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Template 01 - Product</title>
+		
+		<!-- Bootstrap and core CSS -->
+    	<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+		<link th:href="@{/css/site.css}" rel="stylesheet" />
+		<link th:href="@{/css/product-image.css}" rel="stylesheet" />
+		<link th:href="@{/css/product-description.css}" rel="stylesheet">
+	</head>
+	<body>
+		<!-- Navigation -->
+		<nav th:replace="fragments/header :: header"></nav>
+		
+		<!-- Content -->
+		<div class="content-page container">
+			<div class="row">
+				<div class="col-md-12">
+					<p>
+						<span class="btn-link">Catálogo de Brinquedos</span>
+						<span>&gt;</span>
+						<span><a class="btn btn-link"  th:href="@{'/category/'+${produto.categoria.ctCodigo}}" th:text="${produto.categoria.ctDescricao}"></a></span>
+						<span>&gt;</span>
+						<span><a class="btn btn-link" th:href="@{'/product/'+${produto.prCodigo}}" th:text="${produto.prNome}"></a></span>
+						<span>&gt;</span>
+					</p>
+				</div>
+			</div>
+			<div class="row ProductDescription">
+				<div class="col-sm-4">
+					<article class="polaroid">
+						<div class="container-img" id="img-product-description">
+							<div id="SlideProducts" class="carousel slide" data-ride="carousel">
+								<!-- Indicators -->
+								<ol class="carousel-indicators">
+									<li data-target="#SlideProducts" th:each="im, imI : ${produto.images}" th:attr="data-slide-to=${imI.index}"></li>
+								</ol>
+								
+								<!-- Wrapper for slides -->
+								<div class="carousel-inner">
+									<div class="item main-slider-item" th:each="img,imgI : ${produto.images}" th:classappend="${imgI.index == 0} ? active">
+										<a th:href="@{'/product/' + ${produto.prCodigo}}"><img th:src="@{${#strings.replace(img.imHref,'\','/')}}" th:title="${img.imTitle}"/></a>
+									</div>
+								</div>
+				
+								<!-- Left and right controls -->
+								<a class="left carousel-control" href="#SlideProducts" data-slide="prev">
+									<span class="glyphicon glyphicon-chevron-left"></span>
+									<span class="sr-only">Previous</span>
+								</a>
+								<a class="right carousel-control" href="#SlideProducts" data-slide="next">
+									<span class="glyphicon glyphicon-chevron-right"></span>
+									<span class="sr-only">Next</span>
+								</a>
+							</div>
+						</div>
+					</article>
+				</div>
+				<div class="col-sm-8">
+					<p id="ProductId" th:text="${'Código do Produto: '+ produto.prCodigo}"></p>
+					<center><h2 id="Product" th:text="${produto.prNome}"></h2></center>
+					<p id="price" th:text="${'Valor: '+ produto.prValor}"></p>
+				</div>
+			</div>
+			<div class="row ProductDescription">
+				<div class="col-md-12">
+					<p th:text="${produto.prDescricao}"></p>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Footer -->
+		<footer class="footer" th:replace="fragments/footer :: footer"></footer>
+		
+		<!-- Bootstrap core JavaScript -->
+    	<script th:src="@{/jquery/jquery-3.3.1.min.js}"></script>
+		<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	</body>
+</html>

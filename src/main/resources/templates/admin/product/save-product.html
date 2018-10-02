@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Template 01 - Salvar Produto</title>
+		
+		<!-- Bootstrap and core CSS -->
+    	<link th:href="@{../../../bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{../../../css/site.css}" rel="stylesheet">
+	</head>
+	<body>
+		<!-- Navigation -->
+		<nav th:replace="fragments/header :: header"></nav>
+		
+		<!-- Content -->
+		<div class="content-page container">
+			<section>
+				<center><h1 class="ProductDescription">Salvar Produto</h1></center>
+				
+				<!-- MENSAGEM DE SUCESSO -->
+				<div th:if="${message != null}" class="alert alert-success alert-dismissible" role="alert">				
+					<span th:text="${message}"></span>
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+				
+				<div class="col-md-12 center">
+					<form th:action="${produto.prCodigo == null} ? @{/product/admin/insert} : @{/product/admin/update}" th:object="${produto}"
+							 method="post" enctype="multipart/form-data" class="form-horizontal ProductDescription">
+						
+						<!-- Product Id -->
+						<input type="hidden" th:field="*{prCodigo}"/>
+						
+						<!-- Product Name -->
+						<div class="form-group">
+							<label for="prNome" class="col-md-4 control-label">Nome:</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control" th:field="*{prNome}" id="prNome"/>
+							</div>
+						</div>
+						
+						<!-- Product Description -->
+						<div class="form-group">
+							<label for="prDescricao" class="col-md-4 control-label">Descrição:</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control" th:field="*{prDescricao}" id="prDescricao"/>
+							</div>
+						</div>
+						
+						<!-- Product Price -->
+						<div class="form-group">
+							<label for="prValor" class="col-md-4 control-label">Valor:</label>
+							<div class="col-md-2">
+								<input type="number" step="any" class="form-control" th:field="*{prValor}" id="prValor"/>
+							</div>
+						</div>
+						
+						<!-- Product Category -->
+						<div class="form-group">
+							<label for="prCtCodigo" class="col-md-4 control-label">Categoria:</label>
+							<div class="col-md-2">
+								<select class="form-control" th:field="*{categoria}" id="prCtCodigo">
+									<option value="" selected="selected">Selecione</option>
+									<option
+										th:each="ct : ${listaCategoria}"
+										th:value="${ct.ctCodigo}"
+										th:text="${ct.ctDescricao}"></option>
+								</select>
+							</div>
+						</div>
+						
+						<!-- Product Status -->
+						<div class="form-group" th:if="${produto.prCodigo != null} ">
+							<label for="prStatus" class="col-md-4 control-label">Status:</label>
+							<div class="col-md-2">
+								<select class="form-control" name="prStatus" id="prStatus">
+									<option value="" selected="selected">Selecione</option>
+									<option value="0" th:selected="${produto.prCodigo != null && produto.prStatus == 0}">Inativo</option>
+									<option value="1" th:selected="${produto.prStatus == 1}">Ativo</option>
+								</select>
+							</div>
+						</div>
+						
+						<!-- Product Actions -->
+						<div class="form-group">
+							<div class="col-md-12">
+								<button type="submit" class="btn btn-default">Salvar</button>
+								<input type="reset" class="btn btn-default" value="Limpar"/>
+								<a th:href="@{/product/admin/}" class="btn btn-default">Cancelar</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</section>
+		</div>
+		
+		<!-- Footer -->
+		<footer class="footer" th:replace="fragments/footer :: footer"></footer>
+		
+		<!-- Bootstrap core JavaScript -->
+    	<script th:src="@{../../../jquery/jquery-3.3.1.min.js}"></script>
+		<script th:src="@{../../../bootstrap/js/bootstrap.min.js}"></script>
+	</body>
+</html>

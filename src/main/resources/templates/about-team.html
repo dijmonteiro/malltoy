@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Template 01 - Quem Somos</title>
+		
+		<!-- Bootstrap and core CSS -->
+		<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+		<link th:href="@{/css/site.css}" rel="stylesheet" />
+		<link th:href="@{/css/product-image.css}" rel="stylesheet" />
+	</head>
+	<body>
+		<!-- Navigation -->
+		<nav th:replace="fragments/header :: header"></nav>
+		
+		<!-- Content -->
+		<div class="content-page container">
+			<section>
+				<center><h1 class="ProductDescription">Sobre a Equipe</h1></center>
+				<div class="row center">
+					<div th:each="a:${listMembers}" class="col-sm-6 col-md-4">
+						<article class="polaroid">
+							<div class="container-img">
+								<img th:src="@{${#strings.replace(a.usHref,'\','/')}}" th:title="${a.usNome}"/>
+							</div>
+							<div class="container-text">
+								<div class="text">
+									<p>RGM: <span th:text="${a.usRgm}"></span></p>
+									<h3><span th:text="${a.usNome}"></span></h3>
+									<p>E-mail: <span th:text="${a.usEmail}"></span></p>
+								</div>
+							</div>
+						</article>
+					</div>
+				</div>
+			</section>
+		</div>
+		
+		<!-- Footer -->
+		<footer class="footer" th:replace="fragments/footer :: footer"></footer>
+		
+		<!-- Bootstrap core JavaScript -->
+    	<script th:src="@{/jquery/jquery-3.3.1.min.js}"></script>
+		<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	</body>
+</html>

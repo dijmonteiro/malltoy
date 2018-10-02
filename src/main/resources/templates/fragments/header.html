@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body>
+		<!-- Navigation -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" id="main-navigation" th:fragment="header">
+			<div class="container">
+			<!-- Brand and toggle for mobile -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-principal">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" id="main-brand" th:href="@{/}" href="index.html">Templade 01</a>
+    		</div>
+
+    		<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="menu-principal">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a th:href="@{/}" href="index.html">Home Page</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Catálogo de Brinquedos<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li th:each="c:${listaCategoria}">
+								<a th:href="@{'/category/'+${c.ctCodigo}}" th:text="${c.ctDescricao}"></a>
+							</li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrativo <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a th:href="@{/product/admin/}">Gerenciar Brinquedos</a></li>
+							<li><a th:href="@{/images/admin/}">Gerenciar Imagens dos Brinquedos</a></li>
+							<li><a th:href="@{/category/admin/}">Gerenciar Categorias</a></li>
+							<li><a th:href="@{/member/admin/}">Gerenciar Integrantes</a></li>
+						</ul>
+					</li>
+					<li><a th:href="@{/member/}" href="about-team.html">Sobre a Equipe</a></li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+	</body>
+</html>

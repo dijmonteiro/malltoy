@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Template 01 - Imagens</title>
+		
+		<!-- Bootstrap and core CSS -->
+    	<link th:href="@{../../bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{../../css/site.css}" rel="stylesheet">
+	</head>
+	<body>
+		<!-- Navigation -->
+		<nav th:replace="fragments/header :: header"></nav>
+		
+		<!-- Content -->
+		<div class="content-page container">
+			<section>
+				<center><h1 class="ProductDescription">Gerenciar Imagens</h1></center>
+				<a th:href="@{/images/admin/save}" class="btn btn-default btnAddNew">Adicionar Nova Imagem</a>
+				
+				<!-- MENSAGEM DE SUCESSO -->
+				<div th:if="${message != null}" class="alert alert-success alert-dismissible" role="alert">				
+					<span th:text="${message}"></span>
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+				
+				<div class="table-responsive ProductDescription">
+					<table class="table table-hover center">
+						<thead>
+							<tr>
+								<th class="center">Código</th>
+								<th class="center">Imagem</th>
+								<th class="center">Produto</th>
+								<th class="center">Título</th>
+								<th class="center">Status</th>
+                          		<th class="center">Ações</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="i:${images}">
+								<td scope="row" th:text="${i.imCodigo}"></td>
+						      	<td><img th:src="@{${#strings.replace(i.imHref,'\','/')}}" th:title="${i.imTitle}" width="80" height="80"/></td>
+						      	<td th:text="${i.produto.prNome}"></td>
+						      	<td th:text="${i.imTitle}"></td>
+						      	<td th:text="${i.imStatus}"></td>
+								<td>
+									<a th:href="@{'/images/admin/save/'+${i.imCodigo}}" class="btn btn-link">Alterar</a>|
+									<a th:href="@{'/images/admin/delete/'+${i.imCodigo}}" id="btnExcluir" class="btn btn-link">Excluir</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+		</div>
+		
+		<!-- Footer -->
+		<footer class="footer" th:replace="fragments/footer :: footer"></footer>
+		
+		<!-- Bootstrap core JavaScript -->
+    	<script th:src="@{../../jquery/jquery-3.3.1.min.js}"></script>
+		<script th:src="@{../../bootstrap/js/bootstrap.min.js}"></script>
+	</body>
+</html>
